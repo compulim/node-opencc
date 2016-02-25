@@ -83,7 +83,9 @@ exports.simplifiedToTaiwanWithPhrases = function (text) {
       getDatabase('STCharacters')
     ],
     [
-      getDatabase('TWPhrases'),
+      getDatabase('TWPhrasesIT'),
+      getDatabase('TWPhrasesName'),
+      getDatabase('TWPhrasesOther'),
       getDatabase('TWVariants')
     ]
   ]);
@@ -134,7 +136,9 @@ exports.taiwanToSimplifiedWithPhrases = function (text) {
       getDatabase('TWVariants', { reverse: true })
     ],
     [
-      getDatabase('TWPhrases', { reverse: true })
+      getDatabase('TWPhrasesIT', { reverse: true }),
+      getDatabase('TWPhrasesName', { reverse: true }),
+      getDatabase('TWPhrasesOther', { reverse: true })
     ],
     [
       getDatabase('TSPhrases'),
@@ -157,7 +161,7 @@ function convert(text, dictionary) {
         dest = dictionary[target];
 
       if (dest) {
-        i += dest.length - 1;
+        i += target.length - 1;
         converted.push(dest);
         found = 1;
         break;
@@ -177,7 +181,9 @@ function loadDatabase(filename, options) {
     readFile(path.resolve(module.filename, '../../opencc-database/data/dictionary/', filename), 'utf8')
       .then(text => text.split('\n').reduce((map, line) => {
         if (line) {
-          const tokens = line.split('\t');
+          const tokens = line.split('\t').slice(0, 2);
+
+          tokens[1] = tokens[1].split(' ')[0];
 
           reverse && tokens.reverse();
           map[tokens[0]] = tokens[1];
