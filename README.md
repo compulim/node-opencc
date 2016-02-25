@@ -36,7 +36,7 @@ Although `node-opencc` tries to redo `OpenCC` with pure JavaScript, there are fe
 * Multiple alternative phrases, verbs, and characters
 
 ## Changelog
-* 2016-02-25 (0.0.1): First public release
+* 2016-02-25 (0.0.2): First public release
 
 ## Contribution
 You may want to head to [OpenCC](https://github.com/byvoid/opencc) for dictionary contribution.

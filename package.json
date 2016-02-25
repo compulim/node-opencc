@@ -5,7 +5,7 @@
     "email": "compulim@hotmail.com",
     "name": "William Wong"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "refresh": "node scripts/download-opencc-database.js",
     "test": "mocha"
   },
-  "main": "index.js",
+  "main": "src/index.js",
   "devDependencies": {
     "bluebird": "^3.3.1",
     "mkdirp": "^0.5.1",
