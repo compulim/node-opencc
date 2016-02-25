@@ -8,14 +8,19 @@ const
 const
   readFile = Promise.promisify(fs.readFile);
 
-const databases = exports.databases = {};
+const loadedDictionaries = {};
 
-function getDatabase(name, options) {
+function getDictionary(name, options) {
   const
     reverse = (options || {}).reverse,
-    database = databases[name + reverse ? 'Rev' : ''];
+    dictionaryName = name + (reverse ? 'Rev' : ''),
+    dictionary = loadedDictionaries[dictionaryName];
 
-  return database || loadDatabase(name + '.txt', options);
+  return dictionary || loadDictionary(name + '.txt', options).then(dictionary => {
+    loadedDictionaries[dictionaryName] = dictionary;
+
+    return dictionary;
+  });
 }
 
 function convertChain(input, chains) {
@@ -32,12 +37,12 @@ function convertChain(input, chains) {
 exports.hongKongToSimplified = function (text) {
   return convertChain(text, [
     [
-      getDatabase('HKVariantsRevPhrases'),
-      getDatabase('HKVariants', { reverse: true })
+      getDictionary('HKVariantsRevPhrases'),
+      getDictionary('HKVariants', { reverse: true })
     ],
     [
-      getDatabase('TSPhrases'),
-      getDatabase('TSCharacters')
+      getDictionary('TSPhrases'),
+      getDictionary('TSCharacters')
     ],
   ]);
 };
@@ -45,12 +50,12 @@ exports.hongKongToSimplified = function (text) {
 exports.simplifiedToHongKong = function (text) {
   return convertChain(text, [
     [
-      getDatabase('STPhrases'),
-      getDatabase('STCharacters')
+      getDictionary('STPhrases'),
+      getDictionary('STCharacters')
     ],
     [
-      getDatabase('HKVariantsPhrases'),
-      getDatabase('HKVariants')
+      getDictionary('HKVariantsPhrases'),
+      getDictionary('HKVariants')
     ]
   ]);
 };
@@ -58,8 +63,8 @@ exports.simplifiedToHongKong = function (text) {
 exports.simplifiedToTraditional = function (text) {
   return convertChain(text, [
     [
-      getDatabase('STPhrases'),
-      getDatabase('STCharacters')
+      getDictionary('STPhrases'),
+      getDictionary('STCharacters')
     ]
   ]);
 };
@@ -67,11 +72,11 @@ exports.simplifiedToTraditional = function (text) {
 exports.simplifiedToTaiwan = function (text) {
   return convertChain(text, [
     [
-      getDatabase('STPhrases'),
-      getDatabase('STCharacters')
+      getDictionary('STPhrases'),
+      getDictionary('STCharacters')
     ],
     [
-      getDatabase('TWVariants')
+      getDictionary('TWVariants')
     ]
   ]);
 };
@@ -79,14 +84,14 @@ exports.simplifiedToTaiwan = function (text) {
 exports.simplifiedToTaiwanWithPhrases = function (text) {
   return convertChain(text, [
     [
-      getDatabase('STPhrases'),
-      getDatabase('STCharacters')
+      getDictionary('STPhrases'),
+      getDictionary('STCharacters')
     ],
     [
-      getDatabase('TWPhrasesIT'),
-      getDatabase('TWPhrasesName'),
-      getDatabase('TWPhrasesOther'),
-      getDatabase('TWVariants')
+      getDictionary('TWPhrasesIT'),
+      getDictionary('TWPhrasesName'),
+      getDictionary('TWPhrasesOther'),
+      getDictionary('TWVariants')
     ]
   ]);
 };
@@ -94,7 +99,7 @@ exports.simplifiedToTaiwanWithPhrases = function (text) {
 exports.traditionalToHongKong = function (text) {
   return convertChain(text, [
     [
-      getDatabase('HKVariants')
+      getDictionary('HKVariants')
     ]
   ]);
 };
@@ -102,8 +107,8 @@ exports.traditionalToHongKong = function (text) {
 exports.traditionalToSimplified = function (text) {
   return convertChain(text, [
     [
-      getDatabase('TSPhrases'),
-      getDatabase('TSCharacters')
+      getDictionary('TSPhrases'),
+      getDictionary('TSCharacters')
     ]
   ]);
 };
@@ -111,7 +116,7 @@ exports.traditionalToSimplified = function (text) {
 exports.traditionalToTaiwan = function (text) {
   return convertChain(text, [
     [
-      getDatabase('TWVariants')
+      getDictionary('TWVariants')
     ]
   ]);
 };
@@ -119,12 +124,12 @@ exports.traditionalToTaiwan = function (text) {
 exports.taiwanToSimplified = function (text) {
   return convertChain(text, [
     [
-      getDatabase('TWVariantsRevPhrases'),
-      getDatabase('TWVariants', { reverse: true })
+      getDictionary('TWVariantsRevPhrases'),
+      getDictionary('TWVariants', { reverse: true })
     ],
     [
-      getDatabase('TSPhrases'),
-      getDatabase('TSCharacters')
+      getDictionary('TSPhrases'),
+      getDictionary('TSCharacters')
     ]
   ]);
 };
@@ -132,17 +137,17 @@ exports.taiwanToSimplified = function (text) {
 exports.taiwanToSimplifiedWithPhrases = function (text) {
   return convertChain(text, [
     [
-      getDatabase('TWVariantsRevPhrases'),
-      getDatabase('TWVariants', { reverse: true })
+      getDictionary('TWVariantsRevPhrases'),
+      getDictionary('TWVariants', { reverse: true })
     ],
     [
-      getDatabase('TWPhrasesIT', { reverse: true }),
-      getDatabase('TWPhrasesName', { reverse: true }),
-      getDatabase('TWPhrasesOther', { reverse: true })
+      getDictionary('TWPhrasesIT', { reverse: true }),
+      getDictionary('TWPhrasesName', { reverse: true }),
+      getDictionary('TWPhrasesOther', { reverse: true })
     ],
     [
-      getDatabase('TSPhrases'),
-      getDatabase('TSCharacters')
+      getDictionary('TSPhrases'),
+      getDictionary('TSCharacters')
     ]
   ]);
 };
@@ -174,7 +179,7 @@ function convert(text, dictionary) {
   return converted.join('');
 }
 
-function loadDatabase(filename, options) {
+function loadDictionary(filename, options) {
   const reverse = (options || {}).reverse;
 
   return (
