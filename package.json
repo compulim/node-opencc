@@ -10,7 +10,8 @@
     "node": ">= 4.0"
   },
   "scripts": {
-    "refresh": "node scripts/download-opencc-database.js"
+    "refresh": "node scripts/download-opencc-database.js",
+    "test": "mocha"
   },
   "main": "index.js",
   "devDependencies": {
