@@ -1,6 +1,11 @@
 {
   "name": "node-opencc",
   "description": "Conversion between Traditional Chinese and Simplified Chinese in pure Node.js",
+  "author": {
+    "email": "compulim@hotmail.com",
+    "name": "William Wong"
+  },
+  "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
