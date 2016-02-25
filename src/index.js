@@ -161,7 +161,7 @@ function convert(text, dictionary) {
         dest = dictionary[target];
 
       if (dest) {
-        i += target.length - 1;
+        i += j - 1;
         converted.push(dest);
         found = 1;
         break;
