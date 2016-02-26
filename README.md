@@ -34,6 +34,7 @@ opencc.traditionalToHongKong('僞').then(result => result === '偽');
 Although `node-opencc` tries to redo `OpenCC` with pure JavaScript, there are features that are not working as in `OpenCC`. `node-opencc` currently _do not_ support the following features:
 
 * Multiple alternative phrases, verbs, and characters
+* Use `withPhrases` options
 
 ## Changelog
 * 2016-02-25 (0.0.2): First public release
