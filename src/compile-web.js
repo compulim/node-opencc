@@ -41,31 +41,31 @@ var convert = function (text, dictionary, maxLength) {
 
 var hk2s = function (text) {
   var e = window.opencc, c = e.convert;
-  text = c(text, $.extend(e.HKVariantsRevPhrases, e.HKVariantsReverse), Math.max(e.HKVariantsRevPhrasesMaxLength, e.HKVariantsReverseMaxLength));
-  return c(text, $.extend(e.TSPhrases, e.TSCharacters), Math.max(e.TSPhrasesMaxLength, e.TSCharactersMaxLength));
+  text = c(text, Object.assign(e.HKVariantsRevPhrases, e.HKVariantsReverse), Math.max(e.HKVariantsRevPhrasesMaxLength, e.HKVariantsReverseMaxLength));
+  return c(text, Object.assign(e.TSPhrases, e.TSCharacters), Math.max(e.TSPhrasesMaxLength, e.TSCharactersMaxLength));
 };
 
 var s2hk = function (text) {
   var e = window.opencc, c = e.convert;
-  text = c(text, $.extend(e.STPhrases, e.STCharacters), Math.max(e.STPhrasesMaxLength, e.STCharactersMaxLength));
-  return c(text, $.extend(e.HKVariantsPhrases, e.HKVariants), Math.max(e.HKVariantsPhrasesMaxLength, e.HKVariantsMaxLength));
+  text = c(text, Object.assign(e.STPhrases, e.STCharacters), Math.max(e.STPhrasesMaxLength, e.STCharactersMaxLength));
+  return c(text, Object.assign(e.HKVariantsPhrases, e.HKVariants), Math.max(e.HKVariantsPhrasesMaxLength, e.HKVariantsMaxLength));
 };
 
 var s2t = function (text) {
   var e = window.opencc, c = e.convert;
-  return c(text, $.extend(e.STPhrases, e.STCharacters), Math.max(e.STPhrasesMaxLength, e.STCharactersMaxLength));
+  return c(text, Object.assign(e.STPhrases, e.STCharacters), Math.max(e.STPhrasesMaxLength, e.STCharactersMaxLength));
 };
 
 var s2tw = function (text) {
   var e = window.opencc, c = e.convert;
-  text = c(text, $.extend(e.STPhrases, e.STCharacters), Math.max(e.STPhrasesMaxLength, e.STCharactersMaxLength));
+  text = c(text, Object.assign(e.STPhrases, e.STCharacters), Math.max(e.STPhrasesMaxLength, e.STCharactersMaxLength));
   return c(text, e.TWVariants, e.TWVariantsMaxLength);
 };
 
 var s2twp = function (text) {
   var e = window.opencc, c = e.convert;
-  text = c(text, $.extend(e.STPhrases, e.STCharacters), Math.max(e.STPhrasesMaxLength, e.STCharactersMaxLength));
-  return c(text, $.extend(e.TWPhrasesIT, e.TWPhrasesName, e.TWPhrasesOther, e.TWVariants), Math.max(e.TWPhrasesITMaxLength, e.TWPhrasesNameMaxLength, e.TWPhrasesOtherMaxLength, e.TWVariantsMaxLength));
+  text = c(text, Object.assign(e.STPhrases, e.STCharacters), Math.max(e.STPhrasesMaxLength, e.STCharactersMaxLength));
+  return c(text, Object.assign(e.TWPhrasesIT, e.TWPhrasesName, e.TWPhrasesOther, e.TWVariants), Math.max(e.TWPhrasesITMaxLength, e.TWPhrasesNameMaxLength, e.TWPhrasesOtherMaxLength, e.TWVariantsMaxLength));
 };
 
 var t2hk = function (text) {
@@ -75,7 +75,7 @@ var t2hk = function (text) {
 
 var t2s = function (text) {
   var e = window.opencc, c = e.convert;
-  return c(text, $.extend(e.TSPhrases, e.TSCharacters), Math.max(e.TSPhrasesMaxLength, e.TSCharactersMaxLength));
+  return c(text, Object.assign(e.TSPhrases, e.TSCharacters), Math.max(e.TSPhrasesMaxLength, e.TSCharactersMaxLength));
 };
 
 var t2tw = function (text) {
@@ -85,15 +85,15 @@ var t2tw = function (text) {
 
 var tw2s = function (text) {
   var e = window.opencc, c = e.convert;
-  text = c(text, $.extend(e.TWVariantsRevPhrases, e.TWVariantsReverse), Math.max(e.TWVariantsRevPhrasesMaxLength, e.TWVariantsReverseMaxLength));
-  return c(text, $.extend(e.TSPhrases, e.TSCharacters), Math.max(e.TSPhrasesMaxLength, e.TSCharactersMaxLength));
+  text = c(text, Object.assign(e.TWVariantsRevPhrases, e.TWVariantsReverse), Math.max(e.TWVariantsRevPhrasesMaxLength, e.TWVariantsReverseMaxLength));
+  return c(text, Object.assign(e.TSPhrases, e.TSCharacters), Math.max(e.TSPhrasesMaxLength, e.TSCharactersMaxLength));
 };
 
 var tw2sp = function (text) {
   var e = window.opencc, c = e.convert;
-  text = c(text, $.extend(e.TWVariantsRevPhrases, e.TWVariantsReverse), Math.max(e.TWVariantsRevPhrasesMaxLength, e.TWVariantsReverseMaxLength));
-  text = c(text, $.extend(e.TWPhrasesITReverse, e.TWPhrasesNameReverse, e.TWPhrasesOtherReverse), Math.max(e.TWPhrasesITReverseMaxLength, e.TWPhrasesNameReverseMaxLength, e.TWPhrasesOtherReverseMaxLength));
-  return c(text, $.extend(e.TSPhrases, e.TSCharacters), Math.max(e.TSPhrasesMaxLength, e.TSCharactersMaxLength));
+  text = c(text, Object.assign(e.TWVariantsRevPhrases, e.TWVariantsReverse), Math.max(e.TWVariantsRevPhrasesMaxLength, e.TWVariantsReverseMaxLength));
+  text = c(text, Object.assign(e.TWPhrasesITReverse, e.TWPhrasesNameReverse, e.TWPhrasesOtherReverse), Math.max(e.TWPhrasesITReverseMaxLength, e.TWPhrasesNameReverseMaxLength, e.TWPhrasesOtherReverseMaxLength));
+  return c(text, Object.assign(e.TSPhrases, e.TSCharacters), Math.max(e.TSPhrasesMaxLength, e.TSCharactersMaxLength));
 };
 
 function genDictionary(filename, options) {
