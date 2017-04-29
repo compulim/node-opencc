@@ -63,7 +63,7 @@ async function downloadFile(filename) {
     throw new Error(`Server returned ${status}`);
   }
 
-  const text           = res.text();
+  const text           = await res.text();
   const outputFilename = path.join(OUTPUT_PATH, filename);
 
   await mkdirp(path.dirname(outputFilename));

@@ -15,7 +15,7 @@
     "node": ">= 7.6.0"
   },
   "scripts": {
-    "download": "node scripts/download-opencc-database.js",
+    "download": "node scripts/download-opencc-database.js && npm test",
     "test": "mocha"
   },
   "main": "lib/index.js",
