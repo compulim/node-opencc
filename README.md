@@ -19,20 +19,23 @@ await opencc.hongKongToSimplified('滑鼠') === '鼠标';
 await opencc.traditionalToHongKong('僞') === '偽';
 ```
 
-`node-opencc` supports multiple type of translations:
+`node-opencc` supports the following types of translations:
 
-* Hong Kong to Simplified Chinese (`hongKongToSimplified`)
-* Simplified Chinese to Hong Kong (`simplifiedToHongKong`)
-* Simplified Chinese to Traditional Chinese (`simplifiedToTraditional`)
-* Simplified Chinese to Taiwan (`simplifiedToTaiwan`)
-* Simplified Chinese to Taiwan with phrases (`simplifiedToTaiwanWithPhrases`)
-* Traditional Chinese to Hong Kong (`traditionalToHongKong`)
-* Traditional Chinese to Simplified Chinese (`traditionalToSimplified`)
-* Traditional Chinese to Taiwan (`traditionalToTaiwan`)
-* Taiwan to Simplified Chinese (`taiwanToSimplified`)
-* Taiwan to Simplified Chinese with phrases (`taiwanToSimplifiedWithPhrases`)
+| Function name                   | Translation                               |
+| ------------------------------- | ----------------------------------------- |
+| `hongKongToSimplified`          | Hong Kong to Simplified Chinese           |
+| `simplifiedToHongKong`          | Simplified Chinese to Hong Kong           |
+| `simplifiedToTraditional`       | Simplified Chinese to Traditional Chinese |
+| `simplifiedToTaiwan`            | Simplified Chinese to Taiwan              |
+| `simplifiedToTaiwanWithPhrases` | Simplified Chinese to Taiwan with phrases |
+| `traditionalToHongKong`         | Traditional Chinese to Hong Kong          |
+| `traditionalToSimplified`       | Traditional Chinese to Simplified Chinese |
+| `traditionalToTaiwan`           | Traditional Chinese to Taiwan             |
+| `taiwanToSimplified`            | Taiwan to Simplified Chinese              |
+| `taiwanToSimplifiedWithPhrases` | Taiwan to Simplified Chinese with phrases |
 
 ## What's not working
+
 Although `node-opencc` tries to redo `OpenCC` with pure JavaScript, there are features that are not working as in `OpenCC`. `node-opencc` currently _do not_ support the following features:
 
 * Multiple alternative phrases, verbs, and characters
