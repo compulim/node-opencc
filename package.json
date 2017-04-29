@@ -12,21 +12,16 @@
     "url": "https://github.com/compulim/node-opencc"
   },
   "engines": {
-    "node": ">= 4.0"
+    "node": ">= 7.6.0"
   },
   "scripts": {
-    "refresh": "node scripts/download-opencc-database.js",
+    "download": "node scripts/download-opencc-database.js",
     "test": "mocha"
   },
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "devDependencies": {
-    "bluebird": "^3.3.1",
     "mkdirp": "^0.5.1",
     "mocha": "^2.4.5",
     "node-fetch": "^1.3.3"
-  },
-  "dependencies": {
-    "express": "^4.13.4",
-    "uglify-js": "^2.6.2"
   }
 }

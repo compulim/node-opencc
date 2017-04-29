@@ -1,14 +1,10 @@
 'use strict';
 
-const
-  assert = require('assert'),
-  fs = require('fs'),
-  opencc = require('../src/index'),
-  path = require('path'),
-  Promise = require('bluebird');
-
-const
-  readFile = Promise.promisify(fs.readFile);
+const assert   = require('assert');
+const fs       = require('fs');
+const opencc   = require(`../${ require('../package.json').main }`);
+const path     = require('path');
+const readFile = require('../lib/util/readFile');
 
 describe('Convert based on OpenCC tests', function () {
   it('should convert Hong Kong to Simplified Chinese', function (done) {
@@ -45,7 +41,7 @@ describe('Convert based on OpenCC tests', function () {
 });
 
 function readTestFile(filename) {
-  return readFile(path.resolve(module.filename, '../../opencc-database/test/testcases/', filename), 'utf8');
+  return readFile(path.join(__dirname, '../opencc-database/test/testcases/', filename), 'utf8');
 }
 
 function testConvert(name, inputFile, expectedFile, done) {
