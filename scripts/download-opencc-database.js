@@ -1,14 +1,14 @@
 'use strict';
 
-const fetch     = require('node-fetch');
-const fs        = require('fs');
-const path      = require('path');
-const mkdirp    = require('./util/mkdirp');
-const writeFile = require('./util/writeFile');
+const fetch  = require('node-fetch');
+const fs     = require('mz/fs');
+const path   = require('path');
+const mkdirp = require('./util/mkdirp');
 
 const BASE_URL    = 'https://raw.githubusercontent.com/BYVoid/OpenCC/master/';
 const OUTPUT_PATH = path.resolve(__dirname, '../opencc-database');
-const FILENAMES   = [
+
+const FILENAMES = [
   'data/config/hk2s.json',
   'data/config/hk2s.json',
   'data/config/s2hk.json',
@@ -51,23 +51,61 @@ const FILENAMES   = [
   'test/testcases/tw2sp.in'
 ];
 
+const DATA_FILENAMES = [
+  'HKVariants',
+  'HKVariantsPhrases',
+  'HKVariantsRevPhrases',
+  'JPVariants',
+  'STCharacters',
+  'STPhrases',
+  'TSCharacters',
+  'TSPhrases',
+  'TWPhrasesIT',
+  'TWPhrasesName',
+  'TWPhrasesOther',
+  'TWVariants',
+  'TWVariantsRevPhrases'
+];
+
 async function main() {
-  await Promise.all(FILENAMES.map(filename => downloadFile(filename)));
+  await Promise.all(FILENAMES.map(downloadFile));
+
+  const contents = await Promise.all(DATA_FILENAMES.map(filename => {
+    return (async () => {
+      const text = await fetchText(`${ BASE_URL }data/dictionary/${ filename }.txt`);
+
+      return {
+        [filename]: text.split('\n').reduce((array, line) => {
+          line && array.push(line.trim().split(/[\s\t]/));
+
+          return array;
+        }, [])
+      };
+    })();
+  }));
+
+  const merged = Object.assign.apply(null, contents);
+
+  await fs.writeFile('dist/dictionary.json', JSON.stringify(merged, null, 2));
 }
 
-async function downloadFile(filename) {
-  const res        = await fetch(BASE_URL + filename);
+async function fetchText(url) {
+  const res        = await fetch(url);
   const { status } = res;
 
   if (status !== 200) {
-    throw new Error(`Server returned ${status}`);
+    throw new Error(`Server returned ${ status }`);
   }
 
-  const text           = await res.text();
+  return await res.text();
+}
+
+async function downloadFile(filename) {
+  const text           = await fetchText(BASE_URL + filename);
   const outputFilename = path.join(OUTPUT_PATH, filename);
 
   await mkdirp(path.dirname(outputFilename));
-  await writeFile(outputFilename, text);
+  await fs.writeFile(outputFilename, text);
 }
 
 main();

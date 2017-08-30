@@ -8,15 +8,13 @@ OpenCC is a translation library for Traditional and Simplified Chinese with dict
 
 ## Usage
 
-You can only access `node-opencc` programmatically. Since dictionaries are huge, they are loaded asynchronously with Promise interface. Thus, all translations on `node-opencc` will be completed in Promise fashion.
-
-For example,
+`node-opencc` supports Node.js and modern browsers (with Webpack).
 
 ```
 const opencc = require('node-opencc');
 
-await opencc.hongKongToSimplified('滑鼠') === '鼠标';
-await opencc.traditionalToHongKong('僞') === '偽';
+opencc.hongKongToSimplified('滑鼠') === '鼠标';
+opencc.traditionalToHongKong('僞') === '偽';
 ```
 
 `node-opencc` supports the following types of translations:
